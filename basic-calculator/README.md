@@ -16,9 +16,7 @@ A simple Python calculator that can perform basic arithmetic operations like add
 
 ## How to Run 🛠️
 1. Install Python 3 (if not already installed).
-2. Clone this repository:
-   ```bash
-   git clone git@github.com:Naman-Jain-2256/basic-calculator.git
+2. Clone this repository or download the .py file:
 3. navigate to the project directory and run
    ```bash
    python calculator.py
