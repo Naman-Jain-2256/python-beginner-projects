@@ -25,7 +25,7 @@ A simple Python command-line program that checks whether a given number is **eve
 4. Run the script using:
 
 ```bash
-python even_odd_checker.py
+python even-odd-checker.py
 ```
 5. Enter a number when prompted, and the program will tell you whether it’s even or odd.
 
