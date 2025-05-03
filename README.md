@@ -19,6 +19,7 @@ Each project is self-contained in its own folder and includes a simple script wi
 | [`fizz-buzz`](./fizz-buzz)                     | A classic programming task that prints numbers from 1 to 20 with Fizz/Buzz logic. |
 | [`random-quiz-game`](./random-quiz-game)       | A small interactive quiz game that randomly asks questions and tracks correct answers. |
 | [`palindrome-checker`](./palindrome-checker)   | A CLI tool that checks whether a word is a palindrome using list reversal. |
+| [`kaun-banega-crorepati`](./kaun-banega-crorepati) | A terminal-based quiz game inspired by the KBC TV show. Features questions, answers, lifelines, and virtual money. 🎮💰 |
 
 
 ---
