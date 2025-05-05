@@ -21,6 +21,7 @@ Each project is self-contained in its own folder and includes a simple script wi
 | [`palindrome-checker`](./palindrome-checker)   | A CLI tool that checks whether a word is a palindrome using list reversal. |
 | [`kaun-banega-crorepati`](./kaun-banega-crorepati) | A terminal-based quiz game inspired by the KBC TV show. Features questions, answers, lifelines, and virtual money. 🎮💰 |
 | [`secret-code-language`](./secret-code-language) | A fun and beginner-friendly CLI tool to encode and decode words using a custom "secret" format. |
+| [`fibonacci-sequence`](./fibonacci-sequence)   | A simple CLI tool that prints the Fibonacci sequence up to the number of terms entered by the user. |
 
 
 ---
