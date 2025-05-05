@@ -20,6 +20,7 @@ Each project is self-contained in its own folder and includes a simple script wi
 | [`random-quiz-game`](./random-quiz-game)       | A small interactive quiz game that randomly asks questions and tracks correct answers. |
 | [`palindrome-checker`](./palindrome-checker)   | A CLI tool that checks whether a word is a palindrome using list reversal. |
 | [`kaun-banega-crorepati`](./kaun-banega-crorepati) | A terminal-based quiz game inspired by the KBC TV show. Features questions, answers, lifelines, and virtual money. 🎮💰 |
+| [`secret-code-language`](./secret-code-language) | A fun and beginner-friendly CLI tool to encode and decode words using a custom "secret" format. |
 
 
 ---
