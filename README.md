@@ -14,7 +14,7 @@ Each project is self-contained in its own folder and includes a simple script wi
 
 | Project Name              | Description |
 |--------------------------|-------------|
-| [`basic-calculator`](./basic-calculator)       | A basic calculator with support for +, -, *, /, factorial (!), and exponentiation. |
+| [`basic-calculator`](./basic-calculator)       | A feature-rich Python calculator that supports basic and advanced operations including +, -, *, /, %, //, factorial (!), exponentiation, square root, logs, and more with input validation and error handling. |
 | [`even-odd-checker`](./even-odd-checker)       | Checks whether a given number is even or odd using `match-case`. |
 | [`fizz-buzz`](./fizz-buzz)                     | A classic programming task that prints numbers from 1 to 20 with Fizz/Buzz logic. |
 | [`random-quiz-game`](./random-quiz-game)       | A small interactive quiz game that randomly asks questions and tracks correct answers. |
@@ -22,7 +22,6 @@ Each project is self-contained in its own folder and includes a simple script wi
 | [`kaun-banega-crorepati`](./kaun-banega-crorepati) | A terminal-based quiz game inspired by the KBC TV show. Features questions, answers, lifelines, and virtual money. 🎮💰 |
 | [`secret-code-language`](./secret-code-language) | A fun and beginner-friendly CLI tool to encode and decode words using a custom "secret" format. |
 | [`fibonacci-sequence`](./fibonacci-sequence)   | A simple CLI tool that prints the Fibonacci sequence up to the number of terms entered by the user. |
-
 
 ---
 
@@ -46,6 +45,8 @@ Each project is self-contained in its own folder and includes a simple script wi
 - Python 3.12
 - Standard Library (no external packages)
 - CLI-based interaction
+- Math module
+- Random module
 
 ---
 

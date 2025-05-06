@@ -1,11 +1,28 @@
-def factorial(n):
-    if n==0 or n==1 :
-        return 1 
-    elif n<0 or not n.is_integer() :
-        print("Factorials are only defined for positive integer and 0")
+import math as mt
+
+def sqrt(n):
+    if n < 0:
+        print('Value cannot be negative.')
         return None
-    else:
-        return n*factorial(n-1)  
+    return mt.sqrt(n)
+
+def log10(n):
+    if n <= 0:
+        print('Value cannot be negative or 0.')
+        return None
+    return mt.log10(n)
+
+def ln(n):
+    if n <= 0:
+        print('Value cannot be negative or 0.')
+        return None
+    return mt.log(n)
+
+def factorial(n):
+    if n<0 or not n.is_integer():
+        print("Factorials are only defined for positive integer and 0.")
+        return None
+    return mt.factorial(n)  
 
 def print_answer(answer):
     '''Prints the result in the desired format'''
@@ -15,64 +32,137 @@ def print_answer(answer):
     print('-'*50 + '\n')
 
 def calculator():
-    '''It is a simple calculator that does basic arithmetic operations:
-       addition(+), subtraction(-), division(/), multiplication(x)
-       and two more advanced operations: factorial(!), and exponent(exp) 
-     
-     ---
-     HOW TO USE :-
-     1. Enter the operator you want to use(+,-,/,x,!,exp).
-        (Enter from above mentioned operator only else it will say 'INVALID OPERATION') 
-     2. Enter the first number.
-        (For '!', enter a positive integer only, or you will get a warning.)
-     3. If operator is not '!', you will be asked for a second number.
-        (do not enter 0 if the operator is '/', else you will be asked again).
-     4. The result will be displayed.
-     
-     
-     '''
-    print("***************CALCULATOR***************".center(100))
+    '''
+    A versatile and interactive CLI calculator for performing basic and advanced mathematical operations.
 
-    valid_operators = ["+", "-", 'x', '/', 'exp', '!']
+    ----------------------------------------------------------------
+    Supported Operations:
+        +       : Addition (a + b)
+        -       : Subtraction (a - b)
+        *       : Multiplication (a × b)
+        /       : Division (a ÷ b)
+        //      : Integer Division (quotient without remainder)
+        %       : Modulus (remainder of a ÷ b)
+        exp     : Exponentiation (a^b)
+        !       : Factorial (only for non-negative integers)
+        sqrt    : Square Root of a number
+        log10   : Logarithm base 10
+        ln      : Natural Logarithm (base e)
+        perc    : Percentage (What percent is a of b)
+    
+    ----------------------------------------------------------------
+    Usage Instructions:
+    1. Choose an operator from the supported list.
+    2. Enter the first number.
+       - For unary operations (sqrt, log10, ln, !), only one number is required.
+       - For binary operations (+, -, *, /, %, exp, perc, //), a second number will be prompted.
+    3. Division by zero is not allowed and will prompt re-entry.
+    4. Results are displayed in a clean, formatted manner.
+    5. Type 'exit' when prompted for an operator to quit the calculator.
+
+    Example:
+        Operator: +
+        First number: 10
+        Second number: 5
+        Result: The Answer is = 15.0
+    '''
+    
+    print("***************CALCULATOR***************".center(50))
+
+    valid_operators = ["+", "-", '*', '/', 'exp', '!', '%', 'sqrt', 'log10', 'ln', 'perc', '//']
 
     while True:
-        operator = input("Enter operator [+,-,x,/,!(factorial),exp(exponent)]: ").strip()
+        print('\n' + '='*50)
+        print("""
+Enter operator from the list below:
++       : Addition
+-       : Subtraction
+*       : Multiplication
+/       : Division
+exp     : Exponentiation (a^b)
+!       : Factorial (only for non-negative integers)
+perc    : What % is a of b
+sqrt    : Square root
+log10   : Log base 10
+ln      : Natural log (base e)
+%       : Modulus (remainder)
+//      : Integer division (integer part after division)
+        
+"Type 'exit' to quit"
+        """)
+        operator = input("\n=> ").strip().lower()
+
+        if operator == 'exit':
+            print('\nThank you for using calculator.')
+            break
 
         if operator not in valid_operators:
             print('INVALID OPERATION')
             continue
 
-        first = float(input("Enter first number: "))
 
-        if operator not in ['!']:
 
-            if operator == '/':
-                second = float(input("Enter second number (non-zero): "))
+        try:
+            first = float(input("\nEnter first number: "))
+        except ValueError:
+            print('\nInvalid input! Please enter a valid number.')
+            continue
+
+        if operator not in ['!','log10','ln','sqrt']:
+
+            try:
+                second = float(input("\nEnter second number: "))
+            except ValueError:
+                print('\nInvalid input! Please enter a valid number.')
+                continue
+
+            if operator in ['/','%','perc','//']:
                 while second == 0:
-                    print("ERROR! division by Zero is not allowed.")
-                    second = float(input("Please enter a non-zero second number: "))
-            else :   
-                second = float(input("Enter second number: "))     
+                    print("\nERROR! division by Zero is not allowed.")
+                    try:
+                        second = float(input("\nPlease enter a non-zero second number: "))
+                    except ValueError:
+                        print('\nInvalid input! Please enter a valid number.')
+                        continue   
 
         match operator:
             case "+":
                 answer = (first + second)
             case "-":
                 answer = (first - second)
-            case "x":
+            case "*":
                 answer = (first*second)
             case "/":
                 answer = (first/second)
             case "!":
-                answer = factorial(first)
+                try:
+                    answer = factorial(first)
+                except Exception as e:
+                    print(f'Math error: {e}')
+                    answer = None
             case "exp":
                 answer = (first**second)
+            case "log10":
+                answer = log10(first)
+            case "ln":
+                answer = ln(first)
+            case 'sqrt':
+                answer = sqrt(first)
+            case '//':
+                answer = (first//second)
+            case '%':
+                answer = (first%second)
+            case 'perc':
+                percentage = (first / second) * 100
+                answer = f'{percentage:.2f} % of {str(second)}'
+
             
         if answer is not None:
            print_answer(answer)
 
-        cont=input('do you want to perform another calculation? (yes/no): ').strip().lower()
-        if cont != "yes":
+        cont=input('do you want to perform another calculation? (y/n): ').strip().lower()
+        if cont != "y":
+            print('\nThank You for using CALCULATOR!')
             break 
 
 calculator()
