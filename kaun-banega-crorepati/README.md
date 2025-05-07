@@ -2,17 +2,22 @@
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.12-blue.svg)
-![Status](https://img.shields.io/badge/Status-In%20Progress-brightyellow.svg)
+![Status](https://img.shields.io/badge/Status-improving-blue.svg)
 
 Welcome to the "Kaun Banega Crorepati" (KBC) Python quiz game! 🏆 This is a simple terminal-based quiz game that mimics the famous Indian television show "Kaun Banega Crorepati." The game allows users to answer multiple-choice questions and win virtual money 💰 based on their performance. The game includes a feature to quit at any time.
 
+---
+
 ## Features ✨
 
-- 10 multiple-choice questions with varying levels of difficulty. 🎓
-- Each question has 4 options (A-D), and the user must choose the correct answer. ✔️
-- Money increases as the player progresses through the questions. 💸
-- Option to quit the game at any time and retain the money won so far. 🚪💰
-- Correct and incorrect answers are displayed, with a message for the final amount won. 🎉
+- 10 randomized multiple-choice questions (A-D). 🎓
+- Clean input handling with support for lowercase and uppercase. 🧠
+- Graceful exit anytime using `quit` to retain your winnings. 🚪💰
+- Safe-level at Rs. 10,000 ensures minimum winnings after question 5. 🛡️
+- Interactive flow with answer checking and correct answer display. ✅❌
+- Final congratulatory message if all answers are correct. 🥳
+
+---
 
 ## How to Play 🎮
 
@@ -46,59 +51,81 @@ Welcome to the "Kaun Banega Crorepati" (KBC) Python quiz game! 🏆 This is a si
 ## Example Gameplay 🎮
 
 ```bash
-********** WELCOME TO KAUN BANEGA CROREPATI **********
-
+  ********** WELCOME TO KAUN BANEGA CROREPATI **********
+   
 
 ************************************************************
 Question for Rs.1000
  
 (to quit type 'quit' and you will retain the money you won)
-1.) How many continents are there in the world?
-Option-A) 7         Option-B) 6
-Option-C) 9         Option-D) 8
+1.) India is a part of which continent?
+Option-A) Asia         Option-B) Africa
+Option-C) Antarctica         Option-D) North America
 Enter ans (A-D): 
 => a
 Checking your answer...
 Correct! 🎉
 
+Loading next question...
 
 ************************************************************
 Question for Rs.2000
 
 (to quit type 'quit' and you will retain the money you won)
-2.) What is the capital of India?
-Option-A) Agra         Option-B) New Delhi
-Option-C) Delhi         Option-D) Mumbai
+2.) Which is the largest ocean in the world?
+Option-A) Atlantic Ocean         Option-B) Indian Ocean
+Option-C) Pacific Ocean         Option-D) Arctic Ocean
 Enter ans (A-D): 
-=> b
+=> c
 Checking your answer...
 Correct! 🎉
 
+Loading next question...
 
 ************************************************************
 Question for Rs.3000
 
 (to quit type 'quit' and you will retain the money you won)
-3.) Which is the largest ocean in the world?
-Option-A) Atlantic Ocean         Option-B) Indian Ocean
-Option-C) Pacific Ocean         Option-D) Arctic Ocean
+3.) Stark Industries is associated with which fictional superhero?
+Option-A) Iron Fist         Option-B) Iron Man
+Option-C) Hulk         Option-D) Captain America
 Enter ans (A-D): 
-=> a
-Wrong Answer!!!!!
-You Lost ❌
-The Correct was : Option-C) Pacific Ocean
-You leave with Rs.2000
+=> b
+Checking your answer...
+Correct! 🎉
+
+Loading next question...
+
+************************************************************
+Question for Rs.5000
+
+(to quit type 'quit' and you will retain the money you won)
+4.) What is the capital of India?
+Option-A) Agra         Option-B) New Delhi
+Option-C) Delhi         Option-D) Mumbai
+Enter ans (A-D): 
+=> quit
+You chose to Quit!
+You leave with Rs.3,000
 
 ============================================================
-🎉 The Money You Have Won Is => Rs.0
+🎉 The Money You Have Won Is => Rs.3,000
 Thank you for playing Kaun Banega Crorepati!
-```
+---
+
 ## Technologies Used 🧰
 - **Python 3.12**: The programming language used to create the Kaun Banega Crorepati quiz game.
-- **Match-case Statement**: Used for handling arithmetic operations in Python (available from Python 3.10).
+- **Match-case Statement**: Used for user input handling (available from Python 3.10).
+- **Random Module**: Used to shuffle question order each game.
+- **Time Module**: Adds realistic delays to enhance gameplay.
+```
+
+---
 
 ## License 📜
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt) file for details.
+
+---
 
 ## Author 🙋‍♂️
 - **Name**: [Naman Jain](https://github.com/Naman-Jain-2256)
