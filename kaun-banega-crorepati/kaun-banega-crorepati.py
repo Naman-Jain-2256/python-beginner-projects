@@ -2,6 +2,17 @@ import time
 import random
 
 
+def quit_confirmation():
+    while True:
+        confirm = input('Are you sure you want to Quit? (y/n)\n=> ').strip().lower()
+        if confirm not in ['y','n']:
+            print('Invalid input! Please enter y or n.')
+            continue
+        else:
+            if confirm == 'y':
+                return 'y'
+            return
+
 
 def options(a):
     a = a.upper()
@@ -17,7 +28,7 @@ def options(a):
         case 'QUIT':
             return 'quit'
         case _:
-            print('Invalid input! Please enter a value from(A,B,C,D):')
+            print('Invalid input! Please enter a value from(A, B, C, D) or type "quit" :')
             return None
    
 print("********** WELCOME TO KAUN BANEGA CROREPATI **********\n".center(60))
@@ -39,25 +50,26 @@ questions = [
 levels = [1000, 2000, 3000, 5000, 10000, 20000, 40000, 80000, 160000, 320000]
 SAFE_LEVEL = 10000
 
-
 money = 0
+i = 0
 
 random.shuffle(questions)
-for i in range(len(questions)):
+while i < len(questions):
     
     if i > 0:
         print('Loading next question...')
+        print(f"Your current winnings: Rs.{money:,}")
         time.sleep(1)
 
     question = questions[i]
     print("\n" + "*"*60)
-    print(f'Question for Rs.{levels[i]}\n \n(to quit type \'quit\' and you will retain the money you won)')
+    print(f'Question for Rs.{levels[i]}\n\n(to quit type \'quit\' and you will retain the money you won)')
     print(f'{i+1}.)', question[0])
     print(f'Option-A) {question[1][0]}         Option-B) {question[1][1]}\nOption-C) {question[1][2]}         Option-D) {question[1][3]}')
     time.sleep(0.5)
         
     while True:
-        user_input = input("Enter ans (A-D): \n=> ").strip()
+        user_input = input("\nEnter ans (A-D): \n=> ").strip()
         ans = options(user_input)
     
         if ans != None:
@@ -65,15 +77,26 @@ for i in range(len(questions)):
 
     if ans == question[2]:
         money = levels[i]
+        time.sleep(1)
         print('Checking your answer...')
         time.sleep(2)
         print("Correct! 🎉\n")
         time.sleep(1.5)
     elif ans == 'quit':
-        print('You chose to Quit!')
-        print(f'You leave with Rs.{money:,}')
-        break
+        time.sleep(1.5)
+        confirmation = quit_confirmation()
+        time.sleep(1.5)
+        if confirmation == 'y':
+            print('You chose to Quit!')
+            print(f'You leave with Rs.{money:,}')
+            break
+        print('Okay you wish to continue playing.')
+        time.sleep(1.5)
+        continue
+       
     else:
+        print('Checking your answer...')
+        time.sleep(2)
         print('Wrong Answer!!!!!\nYou Lost ❌')
         correct_answer = ['A', 'B', 'C', 'D']
         time.sleep(1.5)
@@ -84,6 +107,9 @@ for i in range(len(questions)):
             money = 0
         print(f'You leave with Rs.{money:,}')
         break
+    
+    i += 1
+
 else:
     print("\n🎉 Congratulations! You have answered all questions correctly and won the grand prize of Rs.320,000!")
     time.sleep(1.5)

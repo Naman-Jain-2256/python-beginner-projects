@@ -8,6 +8,18 @@ Welcome to the "Kaun Banega Crorepati" (KBC) Python quiz game! 🏆 This is a si
 
 ---
 
+## Table of Contents 📚
+- [Features](#features-✨)
+- [How to Play](#how-to-play-🎮)
+- [Requirements](#requirements-📜)
+- [How to Run](#how-to-run-🚀)
+- [Example Gameplay](#example-gameplay-🎮)
+- [Technologies Used](#technologies-used-🧰)
+- [License](#license-📜)
+- [Author](#author-🙋‍♂️)
+
+---
+
 ## Features ✨
 
 - 10 randomized multiple-choice questions (A-D). 🎓
@@ -40,7 +52,7 @@ Welcome to the "Kaun Banega Crorepati" (KBC) Python quiz game! 🏆 This is a si
     cd kaun-banega-crorepati
     ```
 
-2. Run the script `kbc_game.py`.
+2. Run the script `kaun-banega-crorepati.py`.
 
     ```bash
     python kaun-banega-crorepati.py
@@ -111,6 +123,8 @@ You leave with Rs.3,000
 ============================================================
 🎉 The Money You Have Won Is => Rs.3,000
 Thank you for playing Kaun Banega Crorepati!
+```
+
 ---
 
 ## Technologies Used 🧰
@@ -118,7 +132,6 @@ Thank you for playing Kaun Banega Crorepati!
 - **Match-case Statement**: Used for user input handling (available from Python 3.10).
 - **Random Module**: Used to shuffle question order each game.
 - **Time Module**: Adds realistic delays to enhance gameplay.
-```
 
 ---
 
