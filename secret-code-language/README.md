@@ -4,37 +4,54 @@
 ![Status](https://img.shields.io/badge/Status-Stable-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-A fun and beginner-friendly CLI Python tool to **encode** and **decode** words using a custom "secret" format. Designed for practicing string manipulation, conditionals, and user input handling.
+A fun and beginner-friendly CLI Python tool to **encrypt** and **decrypt** words using a custom "secret" format. Designed for practicing string manipulation, conditionals, and user input handling.
+
+---
+
+## 📋 Table of Contents
+
+- [🔐 Secret Code Language](#-secret-code-language)
+- [🧠 How It Works](#-how-it-works)
+  - [Encryption Logic](#encryption-logic)
+  - [Decryption Logic](#decryption-logic)
+- [💻 How to Run](#-how-to-run)
+- [🧪 Sample Output](#-sample-output)
+- [📜 License](#-license)
+- [👨‍💻 Author](#-author)
 
 ---
 
 ## 🧠 How It Works
 
-### Encoding Logic
+### Encryption Logic
 
-- Takes a user input word.
-- Moves the **first character** to the **end** of the word.
-- Wraps the result with `LKJ` in the front and `FDS` at the end.
+- Takes a user input message.
+- For each word in the message:
+  - If the word has more than 3 characters, moves the **first character** to the **end** of that word.
+  - If the word has 3 characters or fewer, it is reversed instead.
+- Wraps **each word** with `LkJ` in the front and `FdS` at the end.
 
 **Example**  
 Input: `Hello`  
-Process: `elloH` → `LKJelloHFDS`  
-Output: `LKJelloHFDS`
+Process: `elloH` → `LkJelloHFdS`  
+Output: `LkJelloHFdS`
 
 ---
 
-### Decoding Logic
+### Decryption Logic
 
-- Accepts a word in the format `LKJ...FDS`.
-- Removes `LKJ` and `FDS`.
-- Moves the **last character** to the **front** of the word.
+- Accepts a message where each word is in the format `LkJ...FdS`.
+- Removes `LkJ` and `FdS`.
+- For each word in the message:
+  - If the word has more than 3 characters, moves the **last character** to the **front** of that word.
+  - If the word has 3 characters or fewer, it is reversed back to the original.
 
 **Example**  
-Input: `LKJelloHFDS`  
-Process: `elloH` → `Hello`  
+Input: `LkJelloHFdS`  
+Process: remove wrapper → `elloH` → move last letter to front → `Hello`  
 Output: `Hello`
 
-> ⚠️ **Note**: The encoding and decoding are **case-sensitive**. `"Hello"` and `"hello"` will be treated as different words.
+> ⚠️ **Note**: The encryption and decryption are **case-sensitive**. `"Hello"` and `"hello"` will be treated as different words.
 
 ---
 
@@ -55,23 +72,24 @@ python secret-code-language.py
      **********SECRET CODE LANGUAGE**********
 --------------------------------------------------
 
-what do you want me to do (encode/decode)?
-=> encode
-Oh you wish to encode...Okay!
+What do you want me to do (encrypt/decrypt)?
+=> encrypt
+Oh you wish to encrypt...Okay!
 
-Enter the word to encode(case sensitive):
-=> Hello
-
-**************************************************
-
-Your encoded word is: LKJelloHFDS
+Enter message to encrypt (case-sensitive):
+=> hello world
 
 **************************************************
 
-Would you like to encode or decode another word? (yes/no): no
+Your Encrypted Message is: LkJellohFdS LkJorldwFdS
+
+**************************************************
+
+Would you like to encrypt or decrypt another message? (y/n): n
 
 Thanks for using Secret Code Language! 👋
 ```
+> ℹ️ Note: Each word in the message is encrypted or decrypted individually with its own wrapper.
 
 ---
 
@@ -83,4 +101,3 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt
 ## 👨‍💻 Author
 - **Name**: [Naman Jain](https://github.com/Naman-Jain-2256)
 - **Email**: [jain.naman.22560@gmail.com](mailto:jain.naman.22560@gmail.com)
-

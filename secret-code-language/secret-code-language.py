@@ -17,36 +17,75 @@ def secret_code_language():
 
     def result(output,operation=''):
         print('\n' + '*'*50 + '\n')
-        print(f'Your {operation} word is: {output}')
+        print(f'Your {operation.capitalize()} Message is: {output}')
         print('\n' + '*'*50 + '\n')
 
+    def encrypt():
+        while True:
+            message_to_encrypt = input("Enter message to encrypt (case-sensitive):\n=> ").strip()
+            if len(message_to_encrypt) < 1:
+               print('You must enter at least one character.\n')
+               continue
+
+            message_words = message_to_encrypt.split(' ')
+            encrypted_words_list = []
+            for word in message_words:
+                if len(word) > 3:
+                    word1 = f'LkJ{word[1:]+word[0]}FdS'
+                    encrypted_words_list.append(word1)
+                else:
+                    word2 = word[::-1]
+                    encrypted_words_list.append(word2)
+            return " ".join(encrypted_words_list)
+    
+    def decrypt():
+        while True:
+            message_to_decrypt = input('Enter message to decrypt(case sensitive):\n=> ').strip()
+            if len(message_to_decrypt) < 1:
+                print('You must enter at least one character.\n')
+                continue
+            message_words = message_to_decrypt.split(' ')
+            decrypted_words_list = []
+            for word in message_words:
+                if len(word) < 4:
+                    word1 = word[::-1]
+                    decrypted_words_list.append(word1)
+                else:
+                    if  word.startswith("LkJ") and word.endswith('FdS') and len(word) >= 7:
+                        trimmed = word[3:-3]
+                        word2 = trimmed[-1] + trimmed[:-1]
+                        decrypted_words_list.append(word2)
+                    else:
+                        print("Invalid encoded format! Make sure it's correctly encoded.\n")
+                        return None
+            return ' '.join(decrypted_words_list)     
+                    
     while True:
-        user_choice = input("\nwhat do you want me to do (encode/decode)? \n=> ").strip().lower()
-        if user_choice not in ['decode','encode']:
-            print("Invalid Input! Please enter either 'encode' or decode.\n ")
+        user_choice = input("\nWhat do you want me to do (encrypt/decrypt)? \n=> ").strip().lower()
+        if user_choice not in ['decrypt','encrypt']:
+            print("Invalid Input! Please enter either 'encrypt' or 'decrypt'.\n ")
             continue
 
         print(f'Oh you wish to {user_choice}...Okay!\n')
         
-        if user_choice == "encode":
-            word_to_encoded = input('Enter the word to encode(case sensitive):\n=> ').strip()
-            if len(word_to_encoded) < 1:
-                print('You must enter at least one character to encode\n')
-                continue
-            encoded_word = f'LKJ{word_to_encoded[1:] + word_to_encoded[0]}FDS'
-            result(encoded_word,"encoded")
-        elif user_choice == 'decode':
-            word_to_decode = input('Enter the word to decode(case sensitive):\n=> ').strip()
-            if not word_to_decode.startswith('LKJ') or not word_to_decode.endswith('FDS') or len(word_to_decode) < 7:
-                print("Invalid encoded format! Make sure it's correctly encoded.\n")
-                continue
-            trimmed = word_to_decode[3:-3]
-            decoded_word = trimmed[-1] + trimmed[:-1]
-            result(decoded_word,"decoded")
-
-        cont = input('Would you like to encode or decode another word? (yes/no): ').strip().lower()
-        if cont != 'yes':
+        if user_choice == "encrypt":
+            encrypted_message = encrypt()
+            result(encrypted_message,user_choice + 'ed')
+            
+        elif user_choice == 'decrypt':
+            decrypted_message = decrypt()
+            if decrypted_message is not None:
+                result(decrypted_message,user_choice + 'ed')
+        
+        while True:
+            cont = input('Would you like to encrypt or decrypt another message? (y/n): ').strip().lower()
+            if cont in ['y','n']:
+                break
+            print('\nInvalid input! Please enter either "y" or "n".\n')
+            
+        if cont == 'n':
             print("\nThanks for using Secret Code Language! 👋\n")
             break
     
-secret_code_language()
+if __name__ == "__main__":
+    secret_code_language()
