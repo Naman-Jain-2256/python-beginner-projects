@@ -1,4 +1,4 @@
-# ✅ To-Do List (CLI Based)
+# ✅ To-Do List (CLI-Based)
 
 A simple and effective **Command-Line Interface (CLI)** Python program to manage your daily tasks.
 
@@ -9,7 +9,7 @@ A simple and effective **Command-Line Interface (CLI)** Python program to manage
 - 📄 **View Tasks**: Display all the tasks in your to-do list.
 - ➕ **Add Tasks**: Add new tasks with ease.
 - ➖ **Remove Tasks**: Remove tasks using their serial number.
-- 💾 **Persistent Storage**: Tasks are stored in a local `.txt` file so they won't disappear  when you exit.
+- 💾 **Persistent Storage**: Tasks are stored in a local `.txt` file so they won't disappear when you exit.
 - 🔒 **Robust Error Handling**: Gracefully handles invalid inputs and missing files.
 
 ---
@@ -17,7 +17,7 @@ A simple and effective **Command-Line Interface (CLI)** Python program to manage
 ## 📦 Requirements
 
 - Python 3.x  
-- No external libraries required — just built-in Python modules.
+- No external libraries required — uses only built-in Python modules.
 
 ---
 
@@ -30,7 +30,7 @@ A simple and effective **Command-Line Interface (CLI)** Python program to manage
 ```bash
 python todo_list.py
 ```
-4. Follow the on-screen instructions add, remove, or view your tasks.
+4. Follow the on-screen instructions to add, remove, or view your tasks.
 
 ---
 
@@ -40,7 +40,7 @@ python todo_list.py
 --------------------------------------------------
 
 
-Choose from the following operation:-
+Choose from the following operations:
 
 add    : Add a task to the list
 remove : Remove a task from the list
@@ -56,12 +56,12 @@ exit   : Exit the application
 
 1.) Wake up at 6am
 2.) Buy groceries
-3.) Complete python project
+3.) Complete Python project
 
 --------------------------------------------------
 
 
-Choose from the following operation:-
+Choose from the following operations:
 
 add    : Add a task to the list
 remove : Remove a task from the list
