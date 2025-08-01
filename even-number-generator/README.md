@@ -43,7 +43,7 @@ A compact Python script that uses list comprehension to generate all even number
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE.txt) file for details.
 
 ---
 

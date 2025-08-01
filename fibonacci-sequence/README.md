@@ -54,7 +54,7 @@ python fibonacci-sequence.py
 ---
 
 ## 📜 License 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE.txt) file for details.
 
 ## 🙋‍♂️ Author 
 - **Name**: [Naman Jain](https://github.com/Naman-Jain-2256)

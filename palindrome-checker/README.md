@@ -44,7 +44,7 @@ radar is a palindrome
 ---
 
 ## 📄 License
-This project is licensed under the MIT License © 2025 - see the [LICENSE](./LICENSE.txt) file for details.
+This project is licensed under the MIT License © 2025 - see the [LICENSE](../LICENSE.txt) file for details.
 
 ---
 

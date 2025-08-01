@@ -136,7 +136,7 @@ Thank you for playing Kaun Banega Crorepati!
 ---
 
 ## License 📜
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE.txt) file for details.
 
 ---
 

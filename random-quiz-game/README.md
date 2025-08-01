@@ -31,7 +31,7 @@ A simple and interactive console-based quiz game built with Python.
 5. Get your final score at the end! 🏆
 
 ## 📜 License
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE.txt) file for details.
 
 ## 🌟 Acknowledgements
 Thanks to the power of Python and the open-source community! 🚀

@@ -45,7 +45,7 @@ Good Morning Alice
 - You can modify the time ranges in the code to suit your preferences.
 
 ## 📜 License
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE.txt) file for details.
 
 ## 🌟 Acknowledgements
 Thanks to the power of Python and the open-source community! 🚀
