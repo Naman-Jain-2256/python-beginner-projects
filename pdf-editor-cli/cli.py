@@ -1,103 +1,140 @@
 from pdf_tools import PdfTools
+from functools import wraps
 import os
 import time
 import random
 import string
 
-def clear_screen():
 
+def clear_screen():
+    """
+    Clear the terminal screen.
+
+    Uses 'cls' on Windows and 'clear' on Unix-based systems.
+    """
     if os.name == 'nt':
         os.system("cls")
-
     else:
         os.system("clear")
 
+
 def get_default_output_dir():
-    """Generates a default directory to store output"""
+    """
+    Generate and return the default output directory path.
+
+    Creates an 'output' directory relative to the script location
+    if it does not already exist.
+
+    :return: Path to the default output directory.
+    :rtype: str
+    """
     base_dir = os.path.dirname(os.path.abspath(__file__))
     default_dir = os.path.join(base_dir, "output")
     os.makedirs(default_dir, exist_ok=True)
     return default_dir
 
+
 def output_file_location(format='pdf'):
-    """Confirms the name and location of the output"""
+    """
+    Prompt the user for an output file name and save location.
+
+    Handles directory validation and overwrite confirmation.
+
+    :param format: File extension to use for the output file.
+    :type format: str
+    :return: Full path to the output file, or None if aborted.
+    :rtype: str | None
+    """
     while True:
-        output_name = input("What would you like to name your file? (no extension, or type 'exit' to abort operation)\n=> ").strip()
-        print("\n")
+        output_name = input(
+            "What would you like to name your file? "
+            "(no extension, or type 'exit' to abort operation)\n=> "
+        ).strip()
 
         if output_name == "exit":
             return None
-        
-        if output_name == "":
-            print("❌ File name cannot be empty")
-            print("\n")
+
+        if not output_name:
+            print("❌ File name cannot be empty\n")
             continue
         break
 
     output_dir = input(
-    "Please provide a directory path for custom save location "
-    "or press enter key to save in default save location\n=> ")
+        "Provide a directory path for custom save location "
+        "or press Enter to use the default location\n=> "
+    ).strip()
 
-    if output_dir == "":
+    if not output_dir:
         output_dir = get_default_output_dir()
-    else:
-        if not os.path.isdir(output_dir):
-            print("❌ Directory not found. Using default save location instead.")
-            print("\n")   
-            output_dir = get_default_output_dir()
-    
+    elif not os.path.isdir(output_dir):
+        print("❌ Directory not found. Using default save location.\n")
+        output_dir = get_default_output_dir()
+
     output_file = os.path.join(output_dir, f"{output_name}.{format}")
-    
+
     if os.path.exists(output_file):
         while True:
-            confirmation = input("⚠️ File already exists. Would you like to overwrite it? (y/n)\n=> ").strip().lower()
-            print("\n")
-            if confirmation in ['y','n']:
+            confirm = input(
+                "⚠️ File exists. Overwrite? (y/n)\n=> "
+            ).strip().lower()
+            if confirm in ('y', 'n'):
                 break
-            print("Please enter either 'y' or 'n'")
-            print("\n")
-            
-        if confirmation == "n":
-            while True:
-                new_name = input("Enter a new name (no extension, or type 'exit' to abort operation)\n=> ").strip()
-                print("\n")
+            print("Please enter 'y' or 'n'\n")
 
-                if new_name == "":
-                    print("❌ File name cannot be empty")
-                    print("\n")
+        if confirm == 'n':
+            while True:
+                new_name = input(
+                    "Enter a new name (no extension)\n=> "
+                ).strip()
+                if not new_name:
+                    print("❌ File name cannot be empty\n")
                     continue
                 new_file = os.path.join(output_dir, f"{new_name}.{format}")
                 if os.path.exists(new_file):
-                    print("❌ That name already exists too, please choose another.")
-                    print("\n")
+                    print("❌ That name already exists\n")
                     continue
                 output_file = new_file
                 break
-        
+
     return output_file
 
+
 def random_password_generator():
-    """Generates a random password with user-selected options.
-       Ensures at least one character from each chosen type is included."""
+    """
+    Generate a random password based on user-selected options.
+
+    Ensures at least one character from each selected character
+    type is included.
+
+    :return: Generated password.
+    :rtype: str | None
+    """
 
     def ask_choice(prompt):
+        """
+        Prompt the user with a yes/no question.
+
+        :param prompt: Question to display to the user.
+        :type prompt: str
+        :return: True if 'y', False if 'n'.
+        :rtype: bool
+        """
         while True:
-            choice = input(f"{prompt} (y/n): ").lower().strip()
-            if choice in ["y", "n"]:
-                return choice == "y"
+            choice = input(f"{prompt} (y/n): ").strip().lower()
+            if choice in ('y', 'n'):
+                return choice == 'y'
             print("❌ Invalid input! Please enter 'y' or 'n'.")
 
-    # Get password length
     while True:
         try:
-            length = int(input("Enter length of password to generate (≥ 4):\n=> "))
+            length = int(input("Enter password length (≥ 4):\n=> "))
             if length < 4:
-                print("❌ Please enter a value ≥ 4 for a strong password.")
+                print("❌ Password must be at least 4 characters.")
                 continue
             break
         except ValueError:
-            print("❌ Invalid input! Please enter a positive integer.")
-    # Character sets
+            print("❌ Enter a valid integer.")
+
     options = []
     if ask_choice("Include uppercase letters"):
         options.append(string.ascii_uppercase)
@@ -109,193 +146,234 @@ def random_password_generator():
         options.append(string.punctuation)
 
     if not options:
-        print("❌ You must select at least one character type!")
+        print("❌ At least one character type must be selected.")
         return None
 
-    # Ensure at least one character from each chosen type
     password_chars = [random.choice(opt) for opt in options]
-
-    # Fill the rest randomly from all selected pools
     all_chars = "".join(options)
     password_chars += random.choices(all_chars, k=length - len(password_chars))
-
-    # Shuffle so guaranteed chars aren't always at the start
     random.shuffle(password_chars)
 
     return "".join(password_chars)
 
+
 def pause_and_continue(func):
+    """
+    Decorator that pauses execution after a function runs,
+    waits for user input, then clears the screen.
+
+    :param func: Function to wrap.
+    :type func: callable
+    :return: Wrapped function.
+    :rtype: callable
+    """
+    @wraps(func)
     def wrapper(*args, **kwargs):
-       result = func(*args, **kwargs)
-       input("\nPress Enter to go back to the main menu...")
-       clear_screen()
-       return result
+        result = func(*args, **kwargs)
+        input("\nPress Enter to return to the main menu...")
+        clear_screen()
+        return result
 
     return wrapper
 
+
 @pause_and_continue
 def op_check_info(pdf: PdfTools):
+    """
+    Display metadata information about a PDF file.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
     print("📑 Checking PDF info...")
     time.sleep(0.5)
     print(pdf.info())
 
+
 @pause_and_continue
 def op_extract_text(pdf: PdfTools):
+    """
+    Extract text from a PDF file and display it or save it to a text file.
+
+    The user may choose a specific page or extract from the entire PDF.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
     page_num = input(
-        "Enter page number to extract text from "
-        "(or press Enter for whole PDF):\n=> ").strip()
-    
+        "Enter page number (or press Enter for full PDF):\n=> "
+    ).strip()
+
     if page_num == "":
         page_num = None
     else:
         try:
             page_num = int(page_num)
         except ValueError:
-            print("❌ Invalid input.")
-            pause_and_continue()
+            print("❌ Invalid page number.")
             return
-        
+
     while True:
-        usr_choice = input("To save text as a text file enter 'y' or enter 'n' to view on terminal\n=> ").strip().lower()
-        if usr_choice in ['y','n']:
+        choice = input(
+            "Save as text file? (y = save / n = display)\n=> "
+        ).strip().lower()
+        if choice in ('y', 'n'):
             break
-        print("Invalid input! Please enter either 'y' or 'n'.")
+        print("Invalid input.")
 
-    if usr_choice == 'y':
-        output_file = output_file_location(format="txt")
-        print("Extracting text...")
-        time.sleep(0.5)
-        try:
-            pdf.extract_text(page_num, output_file)
-            print("Saving text...")
+    try:
+        if choice == 'y':
+            output_file = output_file_location(format="txt")
+            print("Extracting text...")
             time.sleep(0.5)
-        except ValueError as e:
-            print(f"❌ Error: {e}")
-
-    else:        
-        try:
+            pdf.extract_text(page_num, output_file)
+            print("✅ Text saved successfully.")
+        else:
             text = pdf.extract_text(page_num)
-            while True:
-                preview = input("Do you want to preview first 100 chars? (y/n): ").strip().lower()
-                if preview in ['y','n']:
-                    break
-                print("Invalid input! Please enter either 'y' or 'n'.")
-
             print("\n✅ Extracted text:\n")
-            if preview == 'y':
-                print(text[:100] + ("..." if len(text) > 1000 else ""))
-            else:
-                print(text)
-        except ValueError as e:
-            print(f"❌ Error: {e}")
+            print(text)
+    except ValueError as e:
+        print(f"❌ Error: {e}")
+
 
 @pause_and_continue
 def op_split_pdf(pdf: PdfTools):
-    raw_input = input("Enter the page numbers (separated by ',') to split\n=> ").strip()
+    """
+    Create a new PDF using selected pages from the original PDF.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
+    raw = input("Enter page numbers separated by commas:\n=> ")
     try:
-        page_num_list = [int(p.strip()) for p in raw_input.split(',')]
+        pages = [int(p.strip()) for p in raw.split(',')]
     except ValueError:
-        print("❌ Error: All page numbers must be integers.")
+        print("❌ Invalid page numbers.")
         return
 
     output_file = output_file_location()
     print("Splitting PDF...")
     time.sleep(0.5)
     try:
-        print("✅ " + pdf.split(page_num_list, output_file))
+        print("✅ " + pdf.split(pages, output_file))
     except ValueError as e:
         print(f"❌ Error: {e}")
 
+
 @pause_and_continue
-def op_rotate_page(pdf :PdfTools):
-        try:
-            page_num = int(input("Enter the number of the page to rotate").strip())
-        except ValueError:
-            print("❌ Error: Invalid input.")
-            return
+def op_rotate_page(pdf: PdfTools):
+    """
+    Rotate a specific page in the PDF.
 
-        try:
-            angle_to_rotate = int(input("Enter the angle of rotation\n=> ").strip())
-        except ValueError:
-            print("❌ Error: Invalid input.")
-            return
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
+    try:
+        page = int(input("Enter page number:\n=> "))
+        angle = int(input("Enter rotation angle:\n=> "))
+    except ValueError:
+        print("❌ Invalid input.")
+        return
 
-        output_file = output_file_location()              
-        try:
-            print("✅ "+ pdf.rotate_page(page_num, angle_to_rotate,output_file))
-        except ValueError as e:
-            print(f"❌ Error: {e}")
+    output_file = output_file_location()
+    try:
+        print("✅ " + pdf.rotate_page(page, angle, output_file))
+    except ValueError as e:
+        print(f"❌ Error: {e}")
+
 
 @pause_and_continue
 def op_delete_page(pdf: PdfTools):
+    """
+    Delete a specific page from the PDF.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
     try:
-        page_num = int(input("Enter the page number of the page to delete\n=> ").strip())
+        page = int(input("Enter page number to delete:\n=> "))
     except ValueError:
-        print("❌ Error: Invalid input.")
+        print("❌ Invalid input.")
         return
-        
+
     output_file = output_file_location()
-    print("Deleting page...")
-    time.sleep(0.5)
     try:
-        print("✅ "+ pdf.delete_pages(page_num,output_file))
+        print("✅ " + pdf.delete_pages(page, output_file))
     except ValueError as e:
         print(f"❌ Error: {e}")
+
 
 @pause_and_continue
 def op_encrypt_pdf(pdf: PdfTools):
-    while True:
-        custom_pwd_choice = input("To set a custom password enter 'y' or 'n' for random password\n=> ").lower()
-        if custom_pwd_choice in ["y","n"]:
-            break
-        print("Invalid input! Please enter either 'y' or 'n'.")
+    """
+    Encrypt a PDF using a user-defined or randomly generated password.
 
-    if custom_pwd_choice == 'y':
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
+    while True:
+        choice = input("Use custom password? (y/n)\n=> ").lower()
+        if choice in ('y', 'n'):
+            break
+
+    if choice == 'y':
         while True:
-            set_cust_pwd = input("Set password: ")
-            confirm_cust_pwd = input("Confirm password: ")
-            if set_cust_pwd == confirm_cust_pwd:
+            pwd = input("Set password: ")
+            confirm = input("Confirm password: ")
+            if pwd == confirm:
                 break
-            print("Password does not match, try agian.")
-        usr_pwd = set_cust_pwd
-        del confirm_cust_pwd
+            print("Passwords do not match.")
     else:
-        usr_pwd = random_password_generator()
-    
+        pwd = random_password_generator()
+
     output_file = output_file_location()
-    print("Encrypting PDF...")
-    time.sleep(0.5)
     try:
-        print("✅ "+ pdf.encrypt_file(output_file,user_pwd=usr_pwd))
+        print("✅ " + pdf.encrypt_file(output_file, user_pwd=pwd))
     except ValueError as e:
         print(f"❌ Error: {e}")
+
 
 @pause_and_continue
 def op_decrypt_pdf(pdf: PdfTools):
-    password = input("Provide the password of the file to start decrypting: ")
+    """
+    Decrypt a password-protected PDF.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
+    pwd = input("Enter PDF password:\n=> ")
     output_file = output_file_location()
-    print("Decrypting PDF...")
-    time.sleep(0.5)
     try:
-        print("✅ "+ pdf.decrypt_file(password, output_file))
+        print("✅ " + pdf.decrypt_file(pwd, output_file))
     except ValueError as e:
         print(f"❌ Error: {e}")
-                    
+
+
 @pause_and_continue
 def op_watermark_pdf(pdf: PdfTools):
-    watermark_file_path = input("Provide the path of the watermark file"
-                            "(ensure that the file is in PDF format)\n=> ")
-    if not os.path.isfile(watermark_file_path) or not watermark_file_path.lower().endswith(".pdf"):
-        print("❌ Error: File does not exist or is not a PDF format")
-        print("\n")
+    """
+    Apply a watermark PDF to every page of the source PDF.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
+    watermark = input("Enter watermark PDF path:\n=> ")
+    if not os.path.isfile(watermark) or not watermark.lower().endswith(".pdf"):
+        print("❌ Invalid watermark file.")
         return
-    
-    print("Applying watermark...")
+
     output_file = output_file_location()
-    print("✅ " + pdf.watermark_apply(watermark_file_path, output_file))
+    print("✅ " + pdf.watermark_apply(watermark, output_file))
+
 
 @pause_and_continue
 def op_list_pages(pdf: PdfTools):
+    """
+    Display a short text preview of each page in the PDF.
+
+    :param pdf: PdfTools instance representing the PDF.
+    :type pdf: PdfTools
+    """
     try:
         summaries = pdf.list_pages()
         for page, snippet in summaries.items():
@@ -304,87 +382,81 @@ def op_list_pages(pdf: PdfTools):
         print(f"❌ Error: {e}")
 
 clear_screen()
-print(("*"*15 + "PDF EDITOR" + "*"*15).center(50))
-print("="*50)
+print(("*" * 15 + " PDF EDITOR " + "*" * 15).center(50))
+print("=" * 50)
 time.sleep(0.5)
 
 input_file_path = input(
-    "Please enter the file path of the PDF to start editing "
-    "or press enter to merge multiple PDFs\n=> ").strip(" \"")
+    "Enter the file path of the PDF to start editing\n"
+    "or press Enter to merge multiple PDFs\n=> "
+).strip(" \"")
 time.sleep(0.5)
 
 if input_file_path == "":
-    raw_input = input("Enter the file path of all the PDFs to merge, separated by ','\n=> ").strip()
-    print("\n")
-    if raw_input:
-        input_files = [f.strip(" '\"") for f in raw_input.split(",") if f.strip(" '\"")]
+    raw_input_files = input(
+        "Enter the file paths of PDFs to merge (comma-separated):\n=> "
+    ).strip()
+
+    if not raw_input_files:
+        print("❌ No input provided.")
     else:
-        print("No input provided.")
-        print("\n")
-    
-    output_file = output_file_location()
-    print("✅ " + PdfTools.merge_pdfs(input_files, output_file))
-    
-if not os.path.isfile(input_file_path) or not input_file_path.lower().endswith(".pdf"):
-    print("❌ Error: File does not exist or is not a PDF format")
-    print("\n")
+        input_files = [
+            f.strip(" '\"") for f in raw_input_files.split(",") if f.strip(" '\"")
+        ]
+        output_file = output_file_location()
+        print("✅ " + PdfTools.merge_pdfs(input_files, output_file))
+
 else:
-    pdf = PdfTools(input_file_path)
-    while True:
-        try:
-            operation_choice = int(input("""
-Please enter the serial no. of the below operations to perform that operation:
-    1  - Check info of the PDF
-    2  - Extract text from the PDF
-    3  - Make a new PDF with only specific pages from old PDF
-    4  - Rotate a certain page of the PDF
-    5  - Delete a certain page from the PDF
-    6  - Encrypt (put password and lock) the PDF
-    7  - Decrypt (remove password and unlock) the PDF
-    8  - Put watermark on every page of the PDF
-    9  - View first 200 letters of each page of the PDF
-    10  - Quit
+    if not os.path.isfile(input_file_path) or not input_file_path.lower().endswith(".pdf"):
+        print("❌ Error: File does not exist or is not a PDF file.")
+    else:
+        pdf = PdfTools(input_file_path)
+
+        while True:
+            try:
+                operation_choice = int(input("""
+Please choose an operation:
+
+1  - Check PDF info
+2  - Extract text from PDF
+3  - Split PDF (select pages)
+4  - Rotate a page
+5  - Delete a page
+6  - Encrypt PDF
+7  - Decrypt PDF
+8  - Apply watermark
+9  - Preview pages
+10 - Quit
+
 => """).strip())
 
-            if operation_choice not in range(1,11):
-                print("\n")
-                print("⚠️ Invalid input, please enter a number between 1–10.")
+                if operation_choice not in range(1, 11):
+                    print("⚠️ Please enter a number between 1 and 10.")
+                    continue
+
+            except ValueError:
+                print("⚠️ Invalid input. Please enter a number.")
                 continue
 
-        except ValueError:
-            print("\n")
-            print("⚠️ Invalid input, please enter a number between 1–10.")
-            continue
-
-        match operation_choice:
-            case 1:
-                op_check_info(pdf)
-
-            case 2:
-                op_extract_text(pdf)
-
-            case 3:
-                op_split_pdf(pdf)
-
-            case 4:
-                op_rotate_page(pdf)
-
-            case 5:
-                op_delete_page(pdf) 
-
-            case 6:
-                op_encrypt_pdf(pdf)
-
-            case 7:
-                op_decrypt_pdf(pdf)
-
-            case 8:
-                op_watermark_pdf(pdf)
-
-            case 9:
-                op_list_pages(pdf)
-                    
-            case 10:
-                print("👋 Exiting program.")
-                break
-
+            match operation_choice:
+                case 1:
+                    op_check_info(pdf)
+                case 2:
+                    op_extract_text(pdf)
+                case 3:
+                    op_split_pdf(pdf)
+                case 4:
+                    op_rotate_page(pdf)
+                case 5:
+                    op_delete_page(pdf)
+                case 6:
+                    op_encrypt_pdf(pdf)
+                case 7:
+                    op_decrypt_pdf(pdf)
+                case 8:
+                    op_watermark_pdf(pdf)
+                case 9:
+                    op_list_pages(pdf)
+                case 10:
+                    print("👋 Exiting program.")
+                    break
